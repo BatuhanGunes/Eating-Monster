@@ -1,0 +1,11 @@
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\bin\Debug\Ghetto Pacman.exe
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\bin\Debug\Ghetto Pacman.pdb
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.csprojResolveAssemblyReference.cache
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.csproj.GenerateResource.Cache
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\Ghetto Pacman.exe
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\Ghetto Pacman.pdb
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.frmMain.resources
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.Properties.Resources.resources
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.HomeForm.resources
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.LoseForm.resources
+C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.infoFrm.resources
