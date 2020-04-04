@@ -14,9 +14,19 @@ namespace EatingMonster
         public WinForm()
         {
             InitializeComponent();
+        }
 
-            this.Height = 32 * 22;
-            this.Width = 32 * 21;
+        private void BtnRestart_Click(object sender, EventArgs e)
+        {
+            WinForm.ActiveForm.Hide();
+            FrmMain frm = new FrmMain();
+            frm.ShowDialog();
+            frm.Dispose();
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

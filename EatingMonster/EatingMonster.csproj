@@ -58,12 +58,6 @@
     <Compile Include="HomeForm.Designer.cs">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="infoFrm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="infoFrm.Designer.cs">
-      <DependentUpon>infoFrm.cs</DependentUpon>
-    </Compile>
     <Compile Include="LoseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,9 +78,6 @@
     <EmbeddedResource Include="HomeForm.resx">
       <DependentUpon>HomeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="infoFrm.resx">
-      <DependentUpon>infoFrm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="LoseForm.resx">
       <DependentUpon>LoseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +91,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="WinForm.resx">
+      <DependentUpon>WinForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

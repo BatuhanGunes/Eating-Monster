@@ -14,9 +14,19 @@ namespace EatingMonster
         public LoseForm()
         {
             InitializeComponent();
+        }
 
-            this.Height = 32 * 22;
-            this.Width = 32 * 21;
+        private void BtnRestart_Click(object sender, EventArgs e)
+        {
+            LoseForm.ActiveForm.Hide();
+            FrmMain frm = new FrmMain();
+            frm.ShowDialog();
+            frm.Dispose();
+        }
+
+        private void BtnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

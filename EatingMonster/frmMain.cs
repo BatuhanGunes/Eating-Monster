@@ -456,25 +456,10 @@ namespace EatingMonster
                             if (Dusman[i].DusmanX == playerX && Dusman[i].DusmanY == playerY) //Dusman ile karakterin kesisme durumunu kontrol eder. 
                             {
                                 Can--; //Bir adet can silinir. 
-
-
                                 Thread.Sleep(2000); //Karakter oldukten sonra 2000ms bekletir.
-
-                                if (Can == 0) //Oyuncunun canlarinin tukenip tukenmedigini kontrol eder.
-                                {
-
-                                    // frmMain.ActiveForm.Hide(); // ( Not : Hata veriyor , oyun ekrani kapanmiyor.)
-
-                                    LoseForm frm = new LoseForm();
-                                    frm.ShowDialog();
-
-                                    System.Diagnostics.Process.GetCurrentProcess().Kill(); //Programi ve butun sonsuz donguleri sonlandirir.
-
-                                }
 
                                 //Oyuncu butun canlarini kaybetti, Bu yuzden butun konumlar sıfırlanıcak
                                 KonumSifirlama();
-
 
                             }
                         }
@@ -482,7 +467,8 @@ namespace EatingMonster
                         //Bu donguyu 150ms de bir calistiri(150ms olmasının nedeni 25ms dusmanlardan avantajli olmasını saglayacak) 
                         Thread.Sleep(150);
                     }
-                }).Start();
+
+            }).Start();
 
             //Gercek Oyun dongusu
             while (true)
@@ -502,13 +488,26 @@ namespace EatingMonster
                     frm.ShowDialog();
                     frm.Dispose();
 
-                    //butun islemleri bitirir.
+                    //butun islemleri bitirir.//Programi ve butun sonsuz donguleri sonlandirir.
+                    System.Diagnostics.Process.GetCurrentProcess().Kill();
+                }
+
+                else if (Can == 0)
+                {
+                    FrmMain.ActiveForm.Hide();
+
+                    LoseForm frm = new LoseForm();
+                    frm.ShowDialog();
+                    frm.Dispose();
+
+                    //butun islemleri bitirir.//Programi ve butun sonsuz donguleri sonlandirir.
                     System.Diagnostics.Process.GetCurrentProcess().Kill();
                 }
 
                 //DrawGame methodunu cagiralim
                 OyunuOlustur();
             }
+
         }
 
 
