@@ -173,6 +173,13 @@ namespace EatingMonster
                 Harita[mouseX, mouseY, 1] = 0; //Harita üzerinde isaretlenen yeri siler
                 Harita[playerX, playerY, 1] = 0;
             }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Middle) //orta tıklandiginda
+            {
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
+
+                Harita[mouseX, mouseY, 1] = 1; //harita üzerinde isaretlenen yeri siler
+            }
         }
 
         void Form1_MouseClick(object sender, MouseEventArgs e)
@@ -191,8 +198,15 @@ namespace EatingMonster
                 int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
                 int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
 
-                Harita[mouseX, mouseY, 1] = 0; //arita üzerinde isaretlenen yeri siler
+                Harita[mouseX, mouseY, 1] = 0; //harita üzerinde isaretlenen yeri siler
                 Harita[playerX, playerY, 1] = 0;
+            }
+            else if (e.Button == System.Windows.Forms.MouseButtons.Middle) //orta tıklandiginda
+            {
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
+
+                Harita[mouseX, mouseY, 1] = 1; //harita üzerinde isaretlenen yeri siler
             }
         }
 
@@ -479,7 +493,7 @@ namespace EatingMonster
                 Application.DoEvents();
 
                 //Oyuncu butun yemleri topladiginda oyunu bitirir.
-                if (Puan >= 1810)
+                if (Puan >= 1800)
                 {
 
                     FrmMain.ActiveForm.Hide();
@@ -543,7 +557,6 @@ namespace EatingMonster
                     {
                         BackBuffer.FillRectangle(Brushes.Blue, rctDestination); //Hedef kareye duvar yerlestirir. 
                     }
-
                 }
             }
 
