@@ -9,3 +9,14 @@ C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\De
 C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.HomeForm.resources
 C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.LoseForm.resources
 C:\Users\Batuhan\Desktop\Yeni klasör (4)\EatingMonster\EatingMonster\obj\x86\Debug\EatingMonster.infoFrm.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\bin\Debug\Ghetto Pacman.exe
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\bin\Debug\Ghetto Pacman.pdb
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.csprojAssemblyReference.cache
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.frmMain.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.HomeForm.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.infoFrm.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.LoseForm.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.Properties.Resources.resources
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\EatingMonster.csproj.GenerateResource.cache
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\Ghetto Pacman.exe
+C:\Users\batuh\Documents\GitHub\Eating-Monster\EatingMonster\obj\x86\Debug\Ghetto Pacman.pdb

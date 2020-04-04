@@ -24,7 +24,7 @@ namespace EatingMonster
         {
             HomeForm.ActiveForm.Hide();
 
-            frmMain frm = new frmMain();
+            FrmMain frm = new FrmMain();
             frm.ShowDialog();
 
         }

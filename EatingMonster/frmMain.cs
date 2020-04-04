@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-
-
-//Gerekli Kütüphaneler 
-using System.Drawing.Imaging;
-using System.Drawing.Drawing2D;
-using System.Threading;
 using System.IO;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace EatingMonster
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
-        
+
         //Dusman Degiskenleri
-        List<Dusman> Dusman; //butun dusmanlari tutar.
+        readonly List<Dusman> Dusman; //butun dusmanlari tutar.
         int DusmanSirasi = 0; //Dusmanlarin ayri zamanlarda baslamasını saglayacak.
 
         //Harita Degiskenleri
-        string Harita_dosya = Application.StartupPath + "\\Map.map"; //Harita dosyasinin konumu
-        int Harita_buyuklugu = 20; //Haritanın buyuklugunu tutacak degisken
-        int[, ,] Harita; //Haritayı 3 boyutlu Array formatinda olusturuyoruz (x, y, z)
-        int KareBuyuklugu = 32; //Duvarlarin buyuklugu 
+        readonly string Harita_dosya = Application.StartupPath + "\\Map.map"; //Harita dosyasinin konumu
+        readonly int Harita_buyuklugu = 20; //Haritanın buyuklugunu tutacak degisken
+        readonly int[,,] Harita; //Haritayı 3 boyutlu Array formatinda olusturuyoruz (x, y, z)
+        readonly int KareBuyuklugu = 32; //Duvarlarin buyuklugu 
 
         //Oyuncu Degiskenleri 
         int Puan = 0; //Puani tutacak degisken
@@ -42,27 +33,17 @@ namespace EatingMonster
         Graphics Buffer; //Ekranda cerceveyi olusturur
         Bitmap Ekran; //Oyunun olusacagi cerceve boyutlarini tutacak 
         Rectangle rctDestination; //Resim ve Kareleri cizerken kulanacagiz. 
-        Bitmap Yem; 
-        Bitmap Varil1;
-        Bitmap Beer1;
-        Bitmap hamburger1;
-        Bitmap Mantar1;
+        readonly Bitmap Yem;
 
-     
-
-
-
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent(); //Formu ve tum degiskenleri hazirlar
-
-
 
             //Haritayi Olusturur (bos)
             Harita = new int[Harita_buyuklugu, Harita_buyuklugu, 10];
 
             //Haritayi yukler 
-            OyunuYukle(Harita_dosya); 
+            OyunuYukle(Harita_dosya);
 
             /*
              * Bu bolumde Dusmanlari ekliyecegiz 
@@ -76,25 +57,31 @@ namespace EatingMonster
             Dusman = new List<Dusman>();
 
             //Kirmizi Dusman 
-            Dusman d1 = new Dusman();
-            d1.Renk = Brushes.Red;
-            d1.img = Properties.Resources.red;
+            Dusman d1 = new Dusman
+            {
+                Renk = Brushes.Red,
+                img = Properties.Resources.red
+            };
             Dusman.Add(d1);
 
             //Mavi Dusman
-            Dusman d2 = new Dusman();
-            d2.Renk = Brushes.Blue;
-            d2.img = Properties.Resources.blue;
+            Dusman d2 = new Dusman
+            {
+                Renk = Brushes.Blue,
+                img = Properties.Resources.blue
+            };
             Dusman.Add(d2);
 
             //Pembe Dusman
-            Dusman d3 = new Dusman();
-            d3.Renk = Brushes.Pink;
-            d3.img = Properties.Resources.pink;
+            Dusman d3 = new Dusman
+            {
+                Renk = Brushes.Pink,
+                img = Properties.Resources.pink
+            };
             Dusman.Add(d3);
-        
 
-            /* Dusmanların varolan konumlarını ayarlar (default konumlarını) */ 
+
+            /* Dusmanların varolan konumlarını ayarlar (default konumlarını) */
             for (int i = 0; i < Dusman.Count; i++) //Bu dongu sayesinde butun duvarlardan kurtulacak
             {
                 Dusman[i].DusmanX = (Harita_buyuklugu / 2) - 1; //Ekranin ortasinda bulunan dusmanin X Kordinati degistirir
@@ -102,17 +89,12 @@ namespace EatingMonster
                 Dusman[i].Hareket = true; //Dusmanlarin ust uste gelmesini engeller
                 Dusman[i].img.MakeTransparent(Color.Black); //Butun dusmanlarin arkaplan renginin siyah kalmasini saglar 
             }
-            
+
 
             //Yem resimlerini degistirmek , ve siyahi seffaf yapmak icin (Ortusme icin)
             Yem = Properties.Resources.food;
             Yem.MakeTransparent(Color.Black);
-            Varil1 = Properties.Resources.Varil;
-            hamburger1 = Properties.Resources.hamburger;
-            Beer1 = Properties.Resources.Beer;
-            Mantar1 = Properties.Resources.Mantar;
 
-             
             playerX = 9;
             playerY = Harita_buyuklugu - 5;// (HaritaBoyutu -> 20) - 5 = 15 
 
@@ -120,7 +102,7 @@ namespace EatingMonster
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         }
 
-        
+
         /// Asagidaki method butun dusmanlari ve oyuncunun pozisyonlarini sifirlar.
         public void KonumSifirlama()
         {
@@ -136,12 +118,11 @@ namespace EatingMonster
             playerY = Harita_buyuklugu - 5;
         }
 
-       
+
         /// Oyun penceresi gosterilmeden bu method yuklenir.
-     
         private void Form1_Load(object sender, EventArgs e)
         {
-        
+
             this.Show(); //Formu gosterir. 
             this.Focus(); //Forma odaklanir.
 
@@ -160,18 +141,15 @@ namespace EatingMonster
             OyunuBaslat();
         }
 
-
         /// Form kapandiginda gerceklesmesi gerekenler
         void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            System.Diagnostics.Process.GetCurrentProcess().Kill(); 
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
             //Uygulamanin calisma sürecini oldurur
             //bunun amacı uygulamadaki sonsuz dongulerdir 
             //uygulama calismaya devam ettikce sonsuz döngülerde devam edicektir, 
             //Bunu yapmazsak, surec devam edicek dongulerimiz bitmeyecektir.
         }
-
-       
 
         /// Bu methodta fare formun üzerine geldiginde gerceklesicek olaylar mevcuttur 
         void Form1_MouseMove(object sender, MouseEventArgs e)
@@ -180,68 +158,52 @@ namespace EatingMonster
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 //fare duvarlari bulur 
-                int mouseX = 0;
-                int mouseY = 0;
-
-                mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır. 
-                mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır. 
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
 
                 Harita[mouseX, mouseY, 1] = 2;
-                
                 //Harita üzerinde isaretlenen yeri ekler
             }
-            else if(e.Button == System.Windows.Forms.MouseButtons.Right) //sag tıklandiginda
+            else if (e.Button == System.Windows.Forms.MouseButtons.Right) //sag tıklandiginda
             {
                 //fare duvarlari bulur 
-                int mouseX = 0;
-                int mouseY = 0;
-
-                mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.  
-                mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır. 
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.  
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır. 
 
                 Harita[mouseX, mouseY, 1] = 0; //Harita üzerinde isaretlenen yeri siler
                 Harita[playerX, playerY, 1] = 0;
             }
         }
 
-        
-        
         void Form1_MouseClick(object sender, MouseEventArgs e)
         {
             //Sol tık yapildigında
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
                 //fare duvarlari isaretler
-                int mouseX = 0;
-                int mouseY = 0;
-
-                mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
-                mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
 
                 Harita[mouseX, mouseY, 1] = 2; //Harita üzerinde isaretlenen yeri ekler
             }
             else if (e.Button == System.Windows.Forms.MouseButtons.Right) //sag tıklandiginda
             {
-                //fare duvarlari bulur 
-                int mouseX = 0;
-                int mouseY = 0;
-
-                mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
-                mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
+                int mouseX = e.X / KareBuyuklugu; //Duvarın X kordinatini alır.
+                int mouseY = e.Y / KareBuyuklugu; //Duvarın Y kordinatini alır.
 
                 Harita[mouseX, mouseY, 1] = 0; //arita üzerinde isaretlenen yeri siler
                 Harita[playerX, playerY, 1] = 0;
             }
         }
-        
-       
+
+
         /// bu method bir tusa basildiginda gerceklesicek
         void Form1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             //switch-case yöntemi ile klavyeden hangi tusa basildigini kontrol ediyoruz.
             switch (e.KeyCode)
             {
-                
+
                 case System.Windows.Forms.Keys.A: //sola hareket 
                     if (Harita[playerX - 1, playerY, 1] != 2) //Duvar icine girip girmedigini kontrol eder
                     {
@@ -281,7 +243,7 @@ namespace EatingMonster
             }
         }
 
-    
+
         /// Bu metod tüm grafik değişkenlerini kurar ve ana oyun döngüsüne başlar
         public void OyunuBaslat()
         {
@@ -291,13 +253,11 @@ namespace EatingMonster
             OyunDongusu(); //Oyun döngüsünü baslatan methodu cagiracak
         }
 
-        
+
         /// Oyun oynanirken bu method bir dongu olarak calisacak
         public void OyunDongusu()
         {
-           
-
-            DusmanSirasi = Dusman.Count; 
+            DusmanSirasi = Dusman.Count;
             //Dusmanlar Serbest birakildiginda ust uste gelen dusmanları ayırmak icin
 
             /*
@@ -319,36 +279,36 @@ namespace EatingMonster
              * bu kod her 175ms icinde tekrarlanicak yani 174ms boyunca uyku halinde kalicak
              * (Buda karakterden 25ms daha sonra demek),
              * if this code was ran in the main game draw loop it would freeze up the code as well 
-             */ 
+             */
             new Thread(() =>
                 {
                     while (true) //Dusmanlari sonsuza dek hareket ettiricek
                     {
-                        for (int i = 0; i < Dusman.Count - DusmanSirasi; i++) 
-                            //teker teker dusmanlar dongu icine giricek
-                        
+                        for (int i = 0; i < Dusman.Count - DusmanSirasi; i++)
+                        //teker teker dusmanlar dongu icine giricek
+
                         {
                             if (Dusman[i].Hareket) //bir dusman ortusmuyorsa bir sonraki konuma gecicek
                             {
                                 //Dusmanlarin Oyuncuya gore hareket etmesini saglayan kodlar 
-                                if (Dusman[i].DusmanY > playerY && Harita[Dusman[i].DusmanX, Dusman[i].DusmanY - 1, 1] != 2) 
-                                    //Oyuncu Dusmana gore yukarıda ise dusmani bir kare yukari tasır 
+                                if (Dusman[i].DusmanY > playerY && Harita[Dusman[i].DusmanX, Dusman[i].DusmanY - 1, 1] != 2)
+                                //Oyuncu Dusmana gore yukarıda ise dusmani bir kare yukari tasır 
                                 {
                                     Dusman[i].DusmanY--; //Dusmani bir kare yukari tasır
                                 }
-                                else if (Dusman[i].DusmanY < playerY && Harita[Dusman[i].DusmanX, Dusman[i].DusmanY + 1, 1] != 2 && Dusman[i].DusmanX != (Harita_buyuklugu / 2) - 1) 
-                                    //Oyuncu Dusmana gore asagida ise dusmani bir kare asagiya tasır 
-                                    //(Ayrica bu if blogunun son kismi dusmanin baslangictaki konumuna donmesini onler)
+                                else if (Dusman[i].DusmanY < playerY && Harita[Dusman[i].DusmanX, Dusman[i].DusmanY + 1, 1] != 2 && Dusman[i].DusmanX != (Harita_buyuklugu / 2) - 1)
+                                //Oyuncu Dusmana gore asagida ise dusmani bir kare asagiya tasır 
+                                //(Ayrica bu if blogunun son kismi dusmanin baslangictaki konumuna donmesini onler)
                                 {
                                     Dusman[i].DusmanY++; //Dusmani bir kare asagiya tasir 
                                 }
-                                else if (Dusman[i].DusmanX > playerX && Harita[Dusman[i].DusmanX - 1, Dusman[i].DusmanY, 1] != 2) 
-                                    //Oyuncu Dusmana gore solda ise dusmani bir kare sola tasır 
+                                else if (Dusman[i].DusmanX > playerX && Harita[Dusman[i].DusmanX - 1, Dusman[i].DusmanY, 1] != 2)
+                                //Oyuncu Dusmana gore solda ise dusmani bir kare sola tasır 
                                 {
                                     Dusman[i].DusmanX--; //Dusmani bir kare sola tasır. 
                                 }
                                 else if (Dusman[i].DusmanX < playerX && Harita[Dusman[i].DusmanX + 1, Dusman[i].DusmanY, 1] != 2)
-                                    //Oyuncu Dusmana gore sagda ise dusmani bir kare saga tasır 
+                                //Oyuncu Dusmana gore sagda ise dusmani bir kare saga tasır 
                                 {
                                     Dusman[i].DusmanX++; //Dusmani bir kare saga tasır.
                                 }
@@ -376,7 +336,7 @@ namespace EatingMonster
                                         }
                                     }
                                     else if (Dusman[i].DusmanY + 1 != Harita_buyuklugu && Dusman[i].DusmanX != (Harita_buyuklugu / 2) - 1) //Dusmanin sınırlardan disari cikip cikmadigini kontrol eder 
-                                                                                                                       //(Yukarida yaptigimiz gibi son kismi tekrarliyoruz baslangica dönmemesi icin)
+                                                                                                                                           //(Yukarida yaptigimiz gibi son kismi tekrarliyoruz baslangica dönmemesi icin)
                                     {
                                         if (Harita[Dusman[i].DusmanX, Dusman[i].DusmanY + 1, 1] != 2) //Dusmanin asagıya inebilirligini kontrol eder.
                                         {
@@ -390,7 +350,7 @@ namespace EatingMonster
                                 Dusman[i].Hareket = true; //Dusmanlarin ortusmesini durdurur 
                             }
                         }
-                        Thread.Sleep(175); //Tekrar taşımadan önce Dusmanlari 175 ms bekletir.
+                        Thread.Sleep(400); //Tekrar taşımadan önce Dusmanlari 175 ms bekletir.
                         DusmanlarınUstUsteGelmeDurumunuKontrolEt(); //Dusmanlarin ortusmesini durdurur 
                     }
                 }).Start(); //Thread lari baslatir.
@@ -407,7 +367,7 @@ namespace EatingMonster
                             Agiz = 0; //Kapat
                         else //degilse 
                             Agiz = 1; //Ac
-                   
+
                         //Oyuncuyu tasirken tasima yonunu belirler
                         switch (Yon_bilgisi)
                         {
@@ -467,46 +427,14 @@ namespace EatingMonster
                                 break;
                         }
 
-                        
-                        
-
 
                         if (Harita[playerX, playerY, 1] == 1) //Mevcut zemin eger 1re esit ise yiyebilecegi yem var
-                         {
+                        {
 
                             Puan += 10; //Yem yediginde puan degiskenini arttirir.
                             Harita[playerX, playerY, 1] = 0; //Yemi harita uzerinden kaldirir.
-                         }
-
-
-                        // Diger yemlerin verdikleri ozellikler
-               
-                        while (Harita[playerX, playerY, 1] == Harita[18, 16, 1])
-                        {
-                            Thread.Sleep(20);//karakteri yavaslatir.
-                            break;
                         }
 
-                        while (Harita[playerX, playerY, 1] == Harita[12, 6, 1])
-                        {
-                            Thread.Sleep(30);//karakteri yavaslatir.
-                            break;
-                        }
-
-                        while (Harita[playerX, playerY, 1] == Harita[4, 11, 1])
-                        {
-                            Thread.Sleep(40);//karakteri yavaslatir.
-                            break;
-                        }
-
-                        while (Harita[playerX, playerY, 1] == Harita[10, 1, 1])
-                        {
-                            Thread.Sleep(50);//karakteri yavaslatir.
-                            break;
-                        }
-
-                        
-                        
 
                         //Oyuncunun olu olup olmadigini kontrol eder
                         for (int i = 0; i < Dusman.Count; i++) //Bu dongu butun dusmanlar icin gecerli olacaktir.
@@ -514,8 +442,8 @@ namespace EatingMonster
                             if (Dusman[i].DusmanX == playerX && Dusman[i].DusmanY == playerY) //Dusman ile karakterin kesisme durumunu kontrol eder. 
                             {
                                 Can--; //Bir adet can silinir. 
-                               
-                 
+
+
                                 Thread.Sleep(2000); //Karakter oldukten sonra 2000ms bekletir.
 
                                 if (Can == 0) //Oyuncunun canlarinin tukenip tukenmedigini kontrol eder.
@@ -527,20 +455,20 @@ namespace EatingMonster
                                     frm.ShowDialog();
 
                                     System.Diagnostics.Process.GetCurrentProcess().Kill(); //Programi ve butun sonsuz donguleri sonlandirir.
-   
+
                                 }
 
                                 //Oyuncu butun canlarini kaybetti, Bu yuzden butun konumlar sıfırlanıcak
                                 KonumSifirlama();
 
-                                
+
                             }
                         }
 
                         //Bu donguyu 150ms de bir calistiri(150ms olmasının nedeni 25ms dusmanlardan avantajli olmasını saglayacak) 
                         Thread.Sleep(150);
                     }
-                }).Start(); 
+                }).Start();
 
             //Gercek Oyun dongusu
             while (true)
@@ -551,13 +479,14 @@ namespace EatingMonster
                 Application.DoEvents();
 
                 //Oyuncu butun yemleri topladiginda oyunu bitirir.
-                if (Puan >= 1770)
+                if (Puan >= 1810)
                 {
 
-                    frmMain.ActiveForm.Hide(); 
+                    FrmMain.ActiveForm.Hide();
 
                     WinForm frm = new WinForm();
                     frm.ShowDialog();
+                    frm.Dispose();
 
                     //butun islemleri bitirir.
                     System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -565,11 +494,10 @@ namespace EatingMonster
 
                 //DrawGame methodunu cagiralim
                 OyunuOlustur();
-                
             }
         }
-        
-        
+
+
         /// bu methodla dusmanlarin ortusmesini engellemeye calisiyoruz
         public void DusmanlarınUstUsteGelmeDurumunuKontrolEt()
         {
@@ -591,7 +519,7 @@ namespace EatingMonster
             }
         }
 
-        
+
         /// bu kod yapiyi olusturur ve animasyonu yonetir
         public void OyunuOlustur()
         {
@@ -605,30 +533,17 @@ namespace EatingMonster
                 {
                     rctDestination = new System.Drawing.Rectangle(x * KareBuyuklugu, y * KareBuyuklugu, KareBuyuklugu, KareBuyuklugu); //Cizilecek Yeni hedefi belirler
 
-
-
-                    if (Harita[x, y, 1] == 1)//Mevcut karede Duvar varmi kontrol eder
+                    if (Harita[x, y, 1] == 1) //Mevcut karede yem varmi kontrol eder
                     {
 
-                        BackBuffer.DrawImage(Varil1, 320, 32);          // varil resmini konumunu yerlestirir.
-                        BackBuffer.DrawImage(Mantar1, 384, 192);        // Mantar resmini konumunu yerlestirir.
-                        BackBuffer.DrawImage(Beer1, 128, 352);          // bira resmini konumunu yerlestirir.
-                        BackBuffer.DrawImage(hamburger1, 576, 512);     // hamburger resmini konumunu yerlestirir.
-                }
-
-
-
-                    if (Harita[x, y, 1] == 1) //Mevcut karede Duvar varmi kontrol eder
-                    {
-                        
                         BackBuffer.DrawImage(Yem, rctDestination); //Hedef kareye yem yerlestirir.
                     }
 
-                    if (Harita[x, y, 1] == 2) //Mevcut karede yem varmi kontrol eder.
+                    if (Harita[x, y, 1] == 2) //Mevcut karede duvar varmi kontrol eder.
                     {
                         BackBuffer.FillRectangle(Brushes.Blue, rctDestination); //Hedef kareye duvar yerlestirir. 
                     }
-                   
+
                 }
             }
 
@@ -649,7 +564,7 @@ namespace EatingMonster
                         new Point((playerX * KareBuyuklugu) + (KareBuyuklugu / 2), (playerY * KareBuyuklugu) + (KareBuyuklugu / 2)),
                         new Point((playerX * KareBuyuklugu), (playerY* KareBuyuklugu)),
                         new Point((playerX * KareBuyuklugu) + KareBuyuklugu, (playerY * KareBuyuklugu))
-                    });
+                        });
                         break;
                     case 2: //asagi
                         //Karakterin gidis yonune uygun olarak siyah bir ucken cizer 
@@ -657,7 +572,7 @@ namespace EatingMonster
                         new Point((playerX * KareBuyuklugu) + (KareBuyuklugu / 2), (playerY * KareBuyuklugu) + (KareBuyuklugu / 2)),
                         new Point((playerX * KareBuyuklugu), (playerY* KareBuyuklugu) + KareBuyuklugu),
                         new Point((playerX * KareBuyuklugu) + KareBuyuklugu, (playerY * KareBuyuklugu) + KareBuyuklugu)
-                    });
+                        });
                         break;
                     case 3: //sol
                         //Karakterin gidis yonune uygun olarak siyah bir ucken cizer 
@@ -665,7 +580,7 @@ namespace EatingMonster
                         new Point((playerX * KareBuyuklugu) + (KareBuyuklugu / 2), (playerY * KareBuyuklugu) + (KareBuyuklugu / 2)),
                         new Point((playerX * KareBuyuklugu), (playerY * KareBuyuklugu)),
                         new Point((playerX * KareBuyuklugu), (playerY * KareBuyuklugu) + KareBuyuklugu)
-                    });
+                        });
                         break;
                     case 4: //sag
                         //Karakterin gidis yonune uygun olarak siyah bir ucken cizer 
@@ -673,7 +588,7 @@ namespace EatingMonster
                         new Point((playerX * KareBuyuklugu) + (KareBuyuklugu / 2), (playerY * KareBuyuklugu) + (KareBuyuklugu / 2)),
                         new Point((playerX * KareBuyuklugu) + KareBuyuklugu, (playerY * KareBuyuklugu)),
                         new Point((playerX * KareBuyuklugu) + KareBuyuklugu, (playerY * KareBuyuklugu) + KareBuyuklugu)
-                    });
+                        });
                         break;
                     default: //Hareket etmiyorken
                         //Hicbirsey yapmiyoruz
@@ -684,7 +599,7 @@ namespace EatingMonster
 
             foreach (Dusman d in Dusman)
             {
-                BackBuffer.DrawImage(d.img, d.DusmanX * KareBuyuklugu, d.DusmanY * KareBuyuklugu, KareBuyuklugu, KareBuyuklugu); 
+                BackBuffer.DrawImage(d.img, d.DusmanX * KareBuyuklugu, d.DusmanY * KareBuyuklugu, KareBuyuklugu, KareBuyuklugu);
                 //Butun Dusmanlari olusturur.
             }
 
@@ -710,7 +625,6 @@ namespace EatingMonster
 
             //Cerceveyi oyun ekranında olusturur. 
             Buffer.DrawImage(Ekran, 0, 0);
-
         }
 
 
@@ -759,7 +673,6 @@ namespace EatingMonster
                     }
                 }
             }
-
 
             //Temizleme
             br.Close();
