@@ -20,26 +20,19 @@ namespace EatingMonster
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void BtnStart_Click(object sender, EventArgs e)
         {
             HomeForm.ActiveForm.Hide();
 
             FrmMain frm = new FrmMain();
             frm.ShowDialog();
+            frm.Dispose();
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BtnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            HomeForm.ActiveForm.Hide();
-
-            infoFrm frm = new infoFrm();
-            frm.ShowDialog();
         }
     }
 }
