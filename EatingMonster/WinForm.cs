@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EatingMonster
@@ -19,7 +20,7 @@ namespace EatingMonster
         private void BtnRestart_Click(object sender, EventArgs e)
         {
             WinForm.ActiveForm.Hide();
-            FrmMain frm = new FrmMain();
+            GameForm frm = new GameForm();
             frm.ShowDialog();
             frm.Dispose();
         }

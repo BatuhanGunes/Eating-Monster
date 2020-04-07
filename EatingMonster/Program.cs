@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EatingMonster
@@ -15,7 +16,7 @@ namespace EatingMonster
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HomeForm()); //run our game
+            Application.Run(new HomeForm());
         }
     }
 }

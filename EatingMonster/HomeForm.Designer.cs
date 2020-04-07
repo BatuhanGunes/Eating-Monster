@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.SuspendLayout();
             this.btnStart = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SuspendLayout();
